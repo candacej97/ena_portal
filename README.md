@@ -1,5 +1,42 @@
 # Events and Announcements (ENA) Portal
 
+A web app boilerplate for keeping track of all events and announcements for an organization and displaying them to public users, and allowing admin users to accept requests to host and/or promote events.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+* Node
+* NPM
+* MongoDB
+
+### Installing
+
+```
+git clone https://github.com/candacej97/ena_portal.git
+cd ena_portal
+npm install
+npm start
+```
+
+## Testing
+
+go to your browser and go to `localhost:8000`
+
+## Built With
+
+* NodeJS
+    * express
+    * mongoose
+    * hbs
+    * express-session
+    * path
+    * bcryptjs
+* MongoDB
+
+
 ## Overview
 
 Running and organization is one thing, getting an organization to be organized is a job in itself. The ENA Portal is a web app for keeping track of all events and announcements for an organization, displaying them, accepting requests to host and/or promote events.
@@ -7,6 +44,11 @@ Running and organization is one thing, getting an organization to be organized i
 Users are able to view announcements (general or event-based) without logging in. However, if they wish to submit/edit an event (editing of events they submitted), they must sign up/log in. Each event will include statuses of whether they have been approved by the admin office as a viable date to hold the event, or included in the promotional queue. 
 
 <!-- Admins who log into the site will have a different view. They will be able to see all announcements and be able to approve or deny the request, put events on postponement with a note of details, and see/edit the announcement queue (based on the admin status).  -->
+
+## Features
+
+<!-- * admin panel - create (or add custom) rsvp codes to db -->
+* use a config file for db security
 
 ## Data Model
 
@@ -105,11 +147,13 @@ An Example Promotional Queue with Embedded Announcement:
 
 10 points total out of 8 required points
 
-## Click [here](src/app.js) for the initial main project file.
+## License
 
-## Annotations / References Used
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-1. [ExpressJS-Session](https://github.com/expressjs/session) - [my code (line 7-12)](src/app.js#L7)
+## Acknowledgements
+
+* [ExpressJS-Session](https://github.com/expressjs/session) - [my code (line 7-12)](src/app.js#L7)
 
 <!-- 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this) -->
 
