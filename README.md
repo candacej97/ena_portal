@@ -23,17 +23,19 @@ npm start
 
 ## Testing
 
-go to your browser and go to `localhost:8000`
+go to your browser and go to `localhost:3000`
 
 ## Built With
 
 * NodeJS
     * express
-    * mongoose
-    * hbs
     * express-session
+    * mongoose
+    * mongoose-url-slugs
+    * hbs
     * path
     * bcryptjs
+    * spectre
 * MongoDB
 
 

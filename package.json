@@ -18,13 +18,14 @@
   },
   "homepage": "https://github.com/candacej97/ena_portal#readme",
   "dependencies": {
-    "eslint": "^5.8.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "hbs": "^4.0.1",
     "mongoose": "^5.3.8",
+    "mongoose-url-slugs": "^1.0.2",
     "path": "^0.12.7",
-    "bcryptjs": "^2.4.3"
+    "spectre.css": "^0.5.8"
   },
   "devDependencies": {
     "eslint-plugin-mocha": "^5.2.0",
