@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Events and Announcements Portal</title>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <header>
+            {{#if user}}
+            <span>
+                <h1>Events and Announcements Portal</h1>
+                <p>Hi, {{user.username}}</p>
+                <a href="./">Home</a>
+            </span>
+            {{else}}
+            <span>
+                <h1>Events and Announcements Portal</h1>
+                <a href="./register">Register</a>
+                <a href="./login">Sign In</a>
+            </span>
+            {{/if}}
+        </header>
+        <main>
+            {{{ body }}}
+        </main>
+    </body>
+</html>

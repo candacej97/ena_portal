@@ -1,0 +1,31 @@
+<h3>My Submitted Announcements</h3>
+
+{{#if message}}
+<div class="error">{{ message }}</div>
+{{/if}}
+
+{{#if announcements}}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Date</th> 
+        <th>Time</th>
+        <th>Location</th>
+        <th>Description</th>
+    </tr>
+    {{#each announcements}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.date}}</td>
+            <td>{{this.start_time}}</td>
+            <td>{{this.location}}</td>
+            <td>{{this.desc}}</td>
+            <td href="./user/edit/{{this.slug}}">Edit Submission</td>
+        </tr>
+    {{/each}}
+</table>
+{{/if}}
+
+<span>
+    <a href="/user/add">Submit New Announcement</a>
+</span>

@@ -1,0 +1,69 @@
+<h3>Add Announcement</h3>
+
+<form action="" method="post">
+
+    {{#if errors}}
+        {{#if errors.name}}
+            <p class="error">{{errors.name}}</p>
+        {{/if}}
+        <input type="text" name="name" placeholder="Name of Event">
+        {{#if errors.location}}
+            <p class="error">{{errors.location}}</p>
+        {{/if}}
+        <input type="text" name="location" placeholder="Location">
+        {{#if errors.date}}
+            <p class="error">{{errors.date}}</p>
+        {{/if}}
+        <input type="date" name="date">
+
+        <label for="start_time">Start Time</label>
+        <input type="time" name="startTime">
+        
+        <label for="end_time">End Time</label>
+        <input type="time" name="endTime">
+
+        <label for="deadline">Deadline</label>
+        <input type="date" name="deadline">
+
+        <label for="price">Price</label>
+        <input type="number" name="price">
+
+        <label for="district_event">District Event</label>
+        <input type="checkbox" name="districtEvent">
+
+        {{#if errors.promo_request}}
+            <p class="error">{{errors.promo_request}}</p>
+        {{/if}}
+        <label for="promo_request">Promo Request</label>
+        <input type="checkbox" name="promoRequest">
+
+        <textarea name="promoMaterial" placeholder="Place all promotion material here."></textarea>
+
+    {{else}}
+        <input type="text" name="name" placeholder="Name of Event">
+        <input type="text" name="location" placeholder="Location">
+        <input type="date" name="date">
+
+        <label for="start_time">Start Time</label>
+        <input type="time" name="startTime">
+        
+        <label for="end_time">End Time</label>
+        <input type="time" name="endTime">
+
+        <label for="deadline">Deadline</label>
+        <input type="date" name="deadline">
+
+        <label for="price">Price</label>
+        <input type="number" name="price">
+
+        <label for="district_event">District Event</label>
+        <input type="checkbox" name="districtEvent">
+
+        <label for="promo_request">Promo Request</label>
+        <input type="checkbox" name="promoRequest">
+
+        <textarea name="promoMaterial" placeholder="Place all promotion material here."></textarea>
+    {{/if}}
+
+    <input type="submit" value="submit">
+</form>

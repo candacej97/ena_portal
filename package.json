@@ -1,0 +1,34 @@
+{
+  "name": "candacej97-final-project",
+  "version": "0.1.0",
+  "description": "Running and organization is one thing, getting an organization to be organized is a job in itself. The ENA Portal is a web app for keeping track of all events and announcements for an organization, displaying them, accepting requests to host and/or promote events.",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0480-001-003-fall-2018/candacej97-final-project.git"
+  },
+  "author": "Candace Johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0480-001-003-fall-2018/candacej97-final-project/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0480-001-003-fall-2018/candacej97-final-project#readme",
+  "dependencies": {
+    "eslint": "^5.8.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
+    "mongoose": "^5.3.8",
+    "path": "^0.12.7",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-mocha": "^5.2.0",
+    "eslint": "^5.8.0",
+    "mocha": "^5.0.5"
+  }
+}
