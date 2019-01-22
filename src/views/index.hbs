@@ -1,24 +1,27 @@
-<h3>All Current Announcements</h3>
 
 {{#if announcements}}
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Date</th> 
-        <th>Time</th>
-        <th>Location</th>
-        <th>Description</th>
-        <th>Created At</th>
-    </tr>
-    {{#each announcements}}
+    <h3>All Current Announcements</h3>
+
+    <table class="table">
         <tr>
-            <td>{{this.name}}</td>
-            <td>{{this.date}}</td>
-            <td>{{this.start_time}}</td>
-            <td>{{this.location}}</td>
-            <td>{{this.desc}}</td>
-            <td>{{this.createdAt}}</td>
+            <th>Name</th>
+            <th>Date</th> 
+            <th>Time</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Created At</th>
         </tr>
-    {{/each}}
-</table>
+        {{#each announcements}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.date}}</td>
+                <td>{{this.start_time}}</td>
+                <td>{{this.location}}</td>
+                <td>{{this.desc}}</td>
+                <td>{{this.createdAt}}</td>
+            </tr>
+        {{/each}}
+    </table>
+{{else}}
+    <h6>There are no announcements.</h6>
 {{/if}}

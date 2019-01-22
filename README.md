@@ -159,7 +159,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <!-- 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this) -->
 
-<!-- ## [Final Submit](https://cs.nyu.edu/courses/fall18/CSCI-UA.0480-003/_site/final-project.html)
+<!-- ## To Do List
 
 * [x] implement user register form
 * [] implement user login form (with user auth) - PASSPORT-LOCAL MONGOOSE
@@ -168,7 +168,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * [] implement css framework - SPECTRE CSS
 * [] prototype a functioning calendar which would lead to day/event details page
   * could also just be a calendar that has a list-view
-* [] create db on server 😬
-* [] deploy to Courant Servers
 
 -->

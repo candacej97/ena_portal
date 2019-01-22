@@ -14,11 +14,13 @@ body {
 
 main {
     padding-left: 2%;
+    text-align: center;
 }
 
 header {
     padding: 2%;
     display: inline-flex;
+    width: 100%;
 }
 
 h1 {
@@ -35,11 +37,14 @@ a, a:visited {
     text-decoration: none;
     color: black;
     font-size: initial;
+    background: aliceblue;
+    border-radius: 2px;
 }
 
 a:focus, a:hover, a:active {
     text-decoration: none;
-    color: white;
+    /* color: white; */
+    background: azure;
 }
 
 .error {
@@ -48,4 +53,8 @@ a:focus, a:hover, a:active {
 
 form {
     display: inline-grid;
+}
+
+form label {
+    text-align: left;
 }
