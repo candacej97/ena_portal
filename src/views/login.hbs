@@ -1,19 +1,19 @@
 <h2>Login</h2>
 
 {{#if message}}
-<div class="error">{{ message }}</div>
+	<div class="error">{{ message }}</div>
 {{/if}}
 
-<form method="POST" action="login">
-	<div>
-		<label for="username">Username:</label>
-		<input type="text" name="username" value="">
+<form method="POST" action="register">
+	<div class="form-group">
+		<label class="form-label" for="username">Username</label>
+		<input class="form-input" type="text" name="username" placeholder="Username">
 	</div>
-	<div>
-		<label for="password">Password:</label> 
-		<input type="password" name="password" value="">
+
+	<div class="form-group">
+		<label class="form-label" for="password">Password</label>
+		<input class="form-input" type="password" name="password" placeholder="Password">
 	</div>
-	<div>
-		<input type="submit" value="Login">
-	</div>
+
+	<input class="btn btn-primary input-group-btn" type="submit" value="Register" disabled="true">
 </form>
