@@ -2,6 +2,19 @@
 
 A web app boilerplate for keeping track of all events and announcements for an organization and displaying them to public users, and allowing admin users to accept requests to host and/or promote events.
 
+## Overview
+
+Running and organization is one thing, getting an organization to be organized is a job in itself. The ENA Portal is a web app for keeping track of all events and announcements for an organization, displaying them, accepting requests to host and/or promote events.
+
+Users are able to view announcements (general or event-based) without logging in. However, if they wish to submit/edit an event (editing of events they submitted), they must sign up/log in. Each event will include statuses of whether they have been approved by the admin office as a viable date to hold the event, or included in the promotional queue. 
+
+<!-- Admins who log into the site will have a different view. They will be able to see all announcements and be able to approve or deny the request, put events on postponement with a note of details, and see/edit the announcement queue (based on the admin status).  -->
+
+## Features
+
+<!-- * admin panel - create (or add custom) rsvp codes to db -->
+* use a config file for db security
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -37,20 +50,6 @@ go to your browser and go to `localhost:3000`
     * bcryptjs
     * spectre
 * MongoDB
-
-
-## Overview
-
-Running and organization is one thing, getting an organization to be organized is a job in itself. The ENA Portal is a web app for keeping track of all events and announcements for an organization, displaying them, accepting requests to host and/or promote events.
-
-Users are able to view announcements (general or event-based) without logging in. However, if they wish to submit/edit an event (editing of events they submitted), they must sign up/log in. Each event will include statuses of whether they have been approved by the admin office as a viable date to hold the event, or included in the promotional queue. 
-
-<!-- Admins who log into the site will have a different view. They will be able to see all announcements and be able to approve or deny the request, put events on postponement with a note of details, and see/edit the announcement queue (based on the admin status).  -->
-
-## Features
-
-<!-- * admin panel - create (or add custom) rsvp codes to db -->
-* use a config file for db security
 
 ## Data Model
 
@@ -104,8 +103,6 @@ An Example Promotional Queue with Embedded Announcement:
 }
 ```
 
-## Click [here](/src/db.js) for the first draft schema.
-
 ## Wireframes
 
 ![Public Homepage of the ENA Portal as of 11/07/18](docs/img/home.png?raw=true "Public Homepage of the ENA Portal as of 11/07/18")
@@ -136,18 +133,9 @@ An Example Promotional Queue with Embedded Announcement:
 
 ## Research Topics
 
-* (3 points) Perform client side form validation using custom JavaScript or JavaScript library
-  * [Custom JS](src/validate.js)
-  * mistakes are bound to happen when users don't know what input the db is actually looking for
-  * prevent submitting a form that will be rejected by the db - [my code](src/app.js#L75)
-  * errors are integrated into the DOM - [my code](src/views/announcement-add.hbs)
 <!-- TODO the following -->
-* (2 points) Use a CSS framework throughout your site
-  * [Spectre CSS](https://github.com/picturepan2/spectre)
 * (5 points) Integrate user authentication
     * I'm going to be using [Passport-Local Mongoose](https://github.com/saintedlama/passport-local-mongoose) for user authentication
-
-10 points total out of 8 required points
 
 ## License
 
@@ -165,7 +153,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * [] implement user login form (with user auth) - PASSPORT-LOCAL MONGOOSE
 * [x] link announcement form submission to logged in user and...
 * [] implement edit announcement form
-* [] implement css framework - SPECTRE CSS
+* [x] implement css framework - SPECTRE CSS
 * [] prototype a functioning calendar which would lead to day/event details page
   * could also just be a calendar that has a list-view
 
