@@ -53,6 +53,7 @@ a:focus, a:hover, a:active {
 
 form {
     display: inline-grid;
+    text-align: -webkit-left;
 }
 
 form label {
