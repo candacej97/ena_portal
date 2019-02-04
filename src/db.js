@@ -26,7 +26,7 @@ const announcementSchema = new mongoose.Schema({
     district_event: Boolean,
     promo_request: Boolean,
     promo_material: String,
-    promoFiles: File,
+    // promoFiles: File,
     createdAt: Date /* timestamp */,
     editedAt: Date /* timestamp */,
 });
