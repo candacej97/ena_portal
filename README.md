@@ -1,5 +1,5 @@
 # Events and Announcements (ENA) Portal
-
+<!-- todo change data model to match current model used -->
 A web app boilerplate for keeping track of all events and announcements for an organization and displaying them to public users, and allowing admin users to accept requests to host and/or promote events.
 
 ## Overview
@@ -48,7 +48,6 @@ go to your browser and go to `localhost:3000`
     * hbs
     * path
     * bcryptjs
-    * spectre
 * MongoDB
 
 ## Data Model
