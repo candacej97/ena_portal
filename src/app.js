@@ -68,6 +68,8 @@ app.get('/register', (req, res) => {
 app.post('/register', (req, res) => {
 	// get all input
 	const {username, password} = req.body;
+	// send all input to auth file
+	// this can also be changed to auth by an external method (FB, Google, etc.)
     auth.register(username, password, (err) => {
         res.render('register', err);
     }, (user) => {
@@ -96,6 +98,11 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/signout', (req, res) => {
+	req.session.user = null;
+	res.redirect('/');
+});
+
 app.get('/user', (req, res) => {
 	// block any user that isn't logged in
     if (req.session.user) {
@@ -105,7 +112,7 @@ app.get('/user', (req, res) => {
 				res.render('user-home', { announcements: docs });
 			}
 			else {
-				res.render('user-home', { message: "There was an error finding your submissions." });
+				res.render('user-home', { message: "You have no submissions." });
 			}
 		});
     }
