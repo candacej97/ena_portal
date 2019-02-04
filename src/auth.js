@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const User = mongoose.model('users');
+const USER = mongoose.model('users');
 
 function register(username, password, errorCallback, successCallback) {
   // if the username or password is too short, call the errorCallback
@@ -10,14 +10,14 @@ function register(username, password, errorCallback, successCallback) {
   }
 
   // check if the user already exists
-  User.findOne({ username: username }, (err, result) => {
+  USER.findOne({ username: username }, (err, result) => {
     if (result) {
-      errorCallback({ message: "Username already exists." });
+      errorCallback({ message: `Username already exists. ${<a href='./login'>Log In instead</a>}.` });
     }
     else {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
-          new User({ username: username, password: hash }).save((err, savedUser) => {
+          new USER({ username: username, password: hash }).save((err, savedUser) => {
             if (err) {
               errorCallback({ message: "There was an error saving the registered user." });
             }
@@ -32,19 +32,19 @@ function register(username, password, errorCallback, successCallback) {
 }
 
 function login(username, password, errorCallback, successCallback) {
-  User.findOne({ username: username }, (err, user) => {
+  USER.findOne({ username: username }, (err, user) => {
     if (!err && user) {
       bcrypt.compare(password, user.password, (err, passwordMatch) => {
         if (passwordMatch) {
           successCallback(user);
         }
         else {
-          errorCallback({ message: "PASSWORDS DO NOT MATCH" });
+          errorCallback({ message: "Passwords do not match." });
         }
       });
     }
     else {
-      errorCallback({ message: "USER NOT FOUND" });
+      errorCallback({ message: "Username not found." });
     }
   });
 }
