@@ -17,10 +17,10 @@ app.use(session({
 }));
 
 // retrieving the model registered with mongoose
-const Announcement = mongoose.model('Announcement');
-// const User = mongoose.model('User');
+const ANNOUNCEMENTS = mongoose.model('announcements');
+// const User = mongoose.model('users');
 // TODO: un-comment the following line
-// const PromoQueue = mongoose.model('PromoQueue');
+// const PromoQueue = mongoose.model('promos');
 
 // serve static files
 const publicPath = path.resolve(__dirname, 'public');
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~ // 
 
 app.get('/', (req, res) => {
 	if (req.session.user) {
@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 	}
 	else {
 		// get all announcements and render them on this page
-		Announcement.find({}, (err, docs) => {
+		ANNOUNCEMENTS.find({}, (err, docs) => {
 			if (!err) {
 				res.render('index', { announcements: docs });
 			} 
@@ -100,7 +100,7 @@ app.get('/user', (req, res) => {
 	// block any user that isn't logged in
     if (req.session.user) {
 		// find all announcments that are associated with the user
-		Announcement.find({ submitedBy: req.session.user.username }, (err, docs) => {
+		ANNOUNCEMENTS.find({ submitedBy: req.session.user.username }, (err, docs) => {
 			if (!err) {
 				res.render('user-home', { announcements: docs });
 			}
@@ -134,7 +134,7 @@ app.post('/user/add', (req, res) => {
 		const createdAt = new Date().toLocaleString();
 
 		// add to db
-		new Announcement({ submitedBy: req.session.user.username, name: name, location: location, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, desc: desc, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+		new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, desc: desc, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
 			if (!err) {
 				res.redirect('/');
 			}
@@ -149,7 +149,7 @@ app.post('/user/add', (req, res) => {
 });
 
 app.get('/user/edit/:slug', (req, res) => {
-	Announcement.findOne({ slug: req.params.slug }, (err, doc) => {
+	ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
 		if (!err) {
 			res.render('announcement-edit', { doc });
 		}

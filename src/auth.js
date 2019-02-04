@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const User = mongoose.model('User');
+const User = mongoose.model('users');
 
 function register(username, password, errorCallback, successCallback) {
   // if the username or password is too short, call the errorCallback
