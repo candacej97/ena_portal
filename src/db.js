@@ -16,19 +16,19 @@ mongoose.model('users', userSchema);
 const announcementSchema = new mongoose.Schema({
     submitedBy: { type: ObjectId, ref: 'user', required: true },
     name: {type: String, required: true},
-    location: String,
+    location: {type: String, required: true},
     date: {type: Date, required: true},
     start_time: Date,
     end_time: Date,
     deadline: Date,
     price: Number,
-    desc: String,
+    desc: {type: String, required: true},
     district_event: Boolean,
     promo_request: Boolean,
     promo_material: String,
     // promoFiles: File,
-    createdAt: Date /* timestamp */,
-    editedAt: Date /* timestamp */,
+    createdAt: {type: Date, default: Date.now()} /* timestamp */,
+    editedAt: Date /* timestamp */
 });
 
 // use plugins (for slug)
