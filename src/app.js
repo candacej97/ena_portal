@@ -180,10 +180,53 @@ app.get('/user/edit/:slug', (req, res) => {
 	if (req.session.user) {
 		ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
 			if (!err) {
+				// change all the date/time formats
+				const {date, deadline, start_time, end_time} = doc;
+
+				if (start_time && start_time.length > 0) {
+					const arr = start_time.split('');
+					arr.splice(2, 0, ':');
+					doc.start_time = arr.join('');
+				}
+
+				if (end_time && end_time.length > 0) {
+					const arr = end_time.split('');
+					arr.splice(2, 0, ':');
+					doc.end_time = arr.join('');
+				}
+				
+				if (date) {
+					const dateJS = new Date(date);
+					let newDate = "" + dateJS.getFullYear() + "-";
+					if (dateJS.getMonth() < 9) {
+						newDate += "0";
+					}
+					newDate += (dateJS.getMonth() + 1) + "-";
+					if (dateJS.getDate() < 9) {
+						newDate += "0";
+					}
+					newDate += (dateJS.getDate() + 1);
+					doc.editedDate = newDate;
+				}
+
+				if (deadline) {
+					const dateJS = new Date(deadline);
+					let newDate = "" + dateJS.getFullYear() + "-";
+					if (dateJS.getMonth() < 9) {
+						newDate += "0";
+					}
+					newDate += (dateJS.getMonth() + 1) + "-";
+					if (dateJS.getDate() < 9) {
+						newDate += "0";
+					}
+					newDate += (dateJS.getDate() + 1);
+					doc.editedDeadline = newDate;
+				}
+
 				res.render('announcement-edit', { doc });
 			}
 			else {
-				res.render('announcement-edit', { message: "Unable to find the event." });
+				res.redirect('/user');
 			}
 		});
 	}
