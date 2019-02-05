@@ -12,7 +12,7 @@ function register(username, password, errorCallback, successCallback) {
   // check if the user already exists
   USER.findOne({ username: username }, (err, result) => {
     if (result) {
-      errorCallback({ message: `Username already exists. ${<a href='./login'>Log In instead</a>}.` });
+      errorCallback({ message: "Username already exists." });
     }
     else {
       bcrypt.genSalt(10, (err, salt) => {
