@@ -126,44 +126,56 @@ app.get('/user/add', (req, res) => {
 });
 
 app.post('/user/add', (req, res) => {
-	// retrieve all form input from rendered page
-	const {name, location, date, startTime, endTime, deadline, price, desc, districtEvent, promoRequest, promoMaterial} = req.body;
-	// validate form data
-	const errors = validate.validateAnnouncementFields(req.body);
-	if (errors.count > 0) {
-		// console.log(`REQ BODY: ${JSON.stringify(req.body)}`);
-		
-		// re-render page with error messages
-		res.render('announcement-add', { errors });
+	// block any user that isn't logged in
+    if (req.session.user) {
+		// retrieve all form input from rendered page
+		const {name, location, date, startTime, endTime, deadline, price, desc, districtEvent, promoRequest, promoMaterial} = req.body;
+		// validate form data
+		const errors = validate.validateAnnouncementFields(req.body);
+		if (errors.count > 0) {
+			// console.log(`REQ BODY: ${JSON.stringify(req.body)}`);
+			
+			// re-render page with error messages
+			res.render('announcement-add', { errors });
+		}
+		else {
+			// create a timestamp
+			const createdAt = new Date().toLocaleString();
+
+			// add to db
+			new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, desc: desc, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+				if (!err) {
+					res.redirect('/');
+				}
+				else {
+					console.log(`Unable to save the document: ${err}`);
+
+					// gracefully handle err with doc saving
+					res.render('announcement-add');
+				}
+			});
+		}
 	}
 	else {
-		// create a timestamp
-		const createdAt = new Date().toLocaleString();
-
-		// add to db
-		new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, desc: desc, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
-			if (!err) {
-				res.redirect('/');
-			}
-			else {
-				console.log(`Unable to save the document: ${err}`);
-
-				// gracefully handle err with doc saving
-				res.render('announcement-add');
-			}
-		});
+		res.redirect('/login');
 	}
 });
 
 app.get('/user/edit/:slug', (req, res) => {
-	ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
-		if (!err) {
-			res.render('announcement-edit', { doc });
-		}
-		else {
-			res.render('announcement-edit', { message: "Unable to find the event."});
-		}
-	});
+	// block any user that isn't logged in
+    if (req.session.user) {
+		ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
+			if (!err) {
+				res.render('announcement-edit', { doc });
+			}
+			else {
+				res.render('announcement-edit', { message: "Unable to find the event."});
+			}
+		});
+	}
+	else {
+		res.redirect('/login');
+	}
 });
 
 app.post('/user/edit/:slug', (req, res) => {
