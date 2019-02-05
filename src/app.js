@@ -17,9 +17,9 @@ app.use(session({
 
 // retrieving the model registered with mongoose
 const ANNOUNCEMENTS = mongoose.model('announcements');
-// const User = mongoose.model('users');
-// TODO: un-comment the following line
-// const PromoQueue = mongoose.model('promos');
+const USERS = mongoose.model('users');
+// TODO: implement promo-admins and uncomment the following line
+// const PROMOS = mongoose.model('promos');
 
 // serve static files
 const publicPath = path.resolve(__dirname, 'public');
@@ -61,7 +61,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-	res.render('register');
+	if (req.session.user) {
+		res.redirect('/user');
+	} else {
+		res.render('register');
+	}
 });
 
 app.post('/register', (req, res) => {
@@ -81,7 +85,11 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-	res.render('login');
+	if (req.session.user) {
+		res.redirect('/user');
+	} else {
+		res.render('login');
+	}
 });
 
 app.post('/login', (req, res) => {
@@ -137,23 +145,42 @@ app.get('/user/add', (req, res) => {
 
 app.post('/user/add', (req, res) => {
 	// retrieve all form input from rendered page
-	const { name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
+	let { name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
 
 	// create a timestamp
 	const createdAt = new Date().toLocaleString();
+	USERS.findOne({username: req.session.user.username}, (err, doc) => {
+		if (doc) {
 
-	// add to db
-	new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
-		if (!err) {
-			res.redirect('/');
-		}
-		else {
-			console.log(`Unable to save the document: ${err}`);
+			if (startTime) {
+				const timeArr = startTime.split(':');
+				startTime = timeArr.join('');
+			}
+		
+			if (endTime) {
+				const timeArr = endTime.split(':');
+				endTime = timeArr.join('');
+			}
 
-			// gracefully handle err with doc saving
-			res.render('announcement-add');
+			// add to db
+			new ANNOUNCEMENTS({ submitedBy: doc._id, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: (districtEvent === "on" ? true : false), promo_request: (promoRequest === "on" ? true : false), promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+				if (!err) {
+					res.redirect('/');
+				}
+				else {
+					console.log(`Unable to save the document: ${err}`);
+
+					// gracefully handle err with doc saving
+					res.render('announcement-add');
+				}
+			});
+
+		} else {
+			// if the user saved in the session is not found in the db...
+			res.redirect('/login');
 		}
 	});
+
 });
 
 app.get('/user/edit/:slug', (req, res) => {
