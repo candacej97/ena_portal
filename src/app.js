@@ -10,10 +10,10 @@ const auth = require('./auth.js');
 
 // enable information
 app.use(session({
-    secret: 'keyboard secretive',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { expires: false }
+	secret: 'keyboard secretive',
+	resave: false,
+	saveUninitialized: false,
+	cookie: { expires: false }
 }));
 
 // retrieving the model registered with mongoose
@@ -37,8 +37,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // have the app find out if the current user is signed in
 app.use((req, res, next) => {
-    res.locals.user = req.session.user;
-    next();
+	res.locals.user = req.session.user;
+	next();
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ ROUTES ~~~~~~~~~~~~~~~~~~~~~~~~~~ // 
@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
 		ANNOUNCEMENTS.find({}, (err, docs) => {
 			if (!err) {
 				res.render('index', { announcements: docs });
-			} 
+			}
 			else {
 				console.log(`No announcements could be found: ${err}`);
 			}
@@ -67,18 +67,18 @@ app.get('/register', (req, res) => {
 
 app.post('/register', (req, res) => {
 	// get all input
-	const {username, password} = req.body;
+	const { username, password } = req.body;
 	// send all input to auth file
 	// this can also be changed to auth by an external method (FB, Google, etc.)
-    auth.register(username, password, (err) => {
-        res.render('register', err);
-    }, (user) => {
-        auth.startAuthenticatedSession(req, user, (err) => {
-            if (!err) {
-                res.redirect('/user');
-            }
-        });
-    });
+	auth.register(username, password, (err) => {
+		res.render('register', err);
+	}, (user) => {
+		auth.startAuthenticatedSession(req, user, (err) => {
+			if (!err) {
+				res.redirect('/user');
+			}
+		});
+	});
 });
 
 app.get('/login', (req, res) => {
@@ -86,26 +86,31 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-	const {username, password} = req.body;
-    auth.login(username, password, (err) => {
-        res.render('login', err);
-    }, (user) => {        
-        auth.startAuthenticatedSession(req, user, (err) => {
-            if (!err) {
-                res.redirect('/user');
-            }
-        });        
-    });
+	const { username, password } = req.body;
+	auth.login(username, password, (err) => {
+		res.render('login', err);
+	}, (user) => {
+		auth.startAuthenticatedSession(req, user, (err) => {
+			if (!err) {
+				res.redirect('/user');
+			}
+		});
+	});
 });
 
 app.get('/signout', (req, res) => {
-	req.session.user = null;
-	res.redirect('/');
+	if (req.session.user) {
+		req.session.user = null;
+		res.redirect('/');
+	}
+	else {
+		res.redirect('/');
+	}
 });
 
 app.get('/user', (req, res) => {
 	// block any user that isn't logged in
-    if (req.session.user) {
+	if (req.session.user) {
 		// find all announcments that are associated with the user
 		ANNOUNCEMENTS.find({ submitedBy: req.session.user.username }, (err, docs) => {
 			if (!err) {
@@ -115,61 +120,61 @@ app.get('/user', (req, res) => {
 				res.render('user-home', { message: "You have no submissions." });
 			}
 		});
-    }
-    else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/user/add', (req, res) => {
-	res.render('announcement-add');
-});
-
-app.post('/user/add', (req, res) => {
-	// block any user that isn't logged in
-    if (req.session.user) {
-		// retrieve all form input from rendered page
-		const {name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial} = req.body;
-		// validate form data
-		const errors = validate.validateAnnouncementFields(req.body);
-		if (errors.count > 0) {
-			// console.log(`REQ BODY: ${JSON.stringify(req.body)}`);
-			
-			// re-render page with error messages
-			res.render('announcement-add', { errors });
-		}
-		else {
-			// create a timestamp
-			const createdAt = new Date().toLocaleString();
-
-			// add to db
-			new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
-				if (!err) {
-					res.redirect('/');
-				}
-				else {
-					console.log(`Unable to save the document: ${err}`);
-
-					// gracefully handle err with doc saving
-					res.render('announcement-add');
-				}
-			});
-		}
 	}
 	else {
 		res.redirect('/login');
 	}
 });
 
+app.get('/user/add', (req, res) => {
+	// block any user that isn't logged in
+	if (req.session.user) {
+		res.render('announcement-add');
+	}
+	else {
+		res.redirect('/login');
+	}
+});
+
+app.post('/user/add', (req, res) => {
+	// retrieve all form input from rendered page
+	const { name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
+	// validate form data
+	const errors = validate.validateAnnouncementFields(req.body);
+	if (errors.count > 0) {
+		// console.log(`REQ BODY: ${JSON.stringify(req.body)}`);
+
+		// re-render page with error messages
+		res.render('announcement-add', { errors });
+	}
+	else {
+		// create a timestamp
+		const createdAt = new Date().toLocaleString();
+
+		// add to db
+		new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+			if (!err) {
+				res.redirect('/');
+			}
+			else {
+				console.log(`Unable to save the document: ${err}`);
+
+				// gracefully handle err with doc saving
+				res.render('announcement-add');
+			}
+		});
+	}
+});
+
 app.get('/user/edit/:slug', (req, res) => {
 	// block any user that isn't logged in
-    if (req.session.user) {
+	if (req.session.user) {
 		ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
 			if (!err) {
 				res.render('announcement-edit', { doc });
 			}
 			else {
-				res.render('announcement-edit', { message: "Unable to find the event."});
+				res.render('announcement-edit', { message: "Unable to find the event." });
 			}
 		});
 	}
@@ -180,7 +185,7 @@ app.get('/user/edit/:slug', (req, res) => {
 
 app.post('/user/edit/:slug', (req, res) => {
 	// NOTE change editedAt to new Date().toLocaleString()
-	
+
 });
 
 app.listen(process.env.PORT || 3000);
