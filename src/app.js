@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const validate = require('./validate');
 require('./db');
 
 const app = express();
@@ -139,31 +138,22 @@ app.get('/user/add', (req, res) => {
 app.post('/user/add', (req, res) => {
 	// retrieve all form input from rendered page
 	const { name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
-	// validate form data
-	const errors = validate.validateAnnouncementFields(req.body);
-	if (errors.count > 0) {
-		// console.log(`REQ BODY: ${JSON.stringify(req.body)}`);
 
-		// re-render page with error messages
-		res.render('announcement-add', { errors });
-	}
-	else {
-		// create a timestamp
-		const createdAt = new Date().toLocaleString();
+	// create a timestamp
+	const createdAt = new Date().toLocaleString();
 
-		// add to db
-		new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
-			if (!err) {
-				res.redirect('/');
-			}
-			else {
-				console.log(`Unable to save the document: ${err}`);
+	// add to db
+	new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+		if (!err) {
+			res.redirect('/');
+		}
+		else {
+			console.log(`Unable to save the document: ${err}`);
 
-				// gracefully handle err with doc saving
-				res.render('announcement-add');
-			}
-		});
-	}
+			// gracefully handle err with doc saving
+			res.render('announcement-add');
+		}
+	});
 });
 
 app.get('/user/edit/:slug', (req, res) => {
