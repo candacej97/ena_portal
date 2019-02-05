@@ -21,6 +21,11 @@
             <input type="text" name="location" placeholder="Location">
         </div>
 
+        <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            <input type="text" name="description" placeholder="Describe this event.">
+        </div>
+        
         {{#if errors.date}}
             <p class="error">{{errors.date}}</p>
         {{/if}}
@@ -86,6 +91,11 @@
         </div>
 
         <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            <input type="text" name="description" placeholder="Describe this event.">
+        </div>
+
+        <div class="form-group">
             <label class="form-label" for="date">Date of Event</label>
             <input type="date" name="date">
         </div>
@@ -134,3 +144,5 @@
 
     <input class="btn btn-primary input-group-btn" type="submit" value="Submit Request">
 </form>
+
+<script src="../public/js/add-validation.js"></script>

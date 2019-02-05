@@ -129,7 +129,7 @@ app.post('/user/add', (req, res) => {
 	// block any user that isn't logged in
     if (req.session.user) {
 		// retrieve all form input from rendered page
-		const {name, location, date, startTime, endTime, deadline, price, desc, districtEvent, promoRequest, promoMaterial} = req.body;
+		const {name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial} = req.body;
 		// validate form data
 		const errors = validate.validateAnnouncementFields(req.body);
 		if (errors.count > 0) {
@@ -143,7 +143,7 @@ app.post('/user/add', (req, res) => {
 			const createdAt = new Date().toLocaleString();
 
 			// add to db
-			new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, desc: desc, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+			new ANNOUNCEMENTS({ submitedBy: req.session.user.username, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: districtEvent, promo_request: promoRequest, promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
 				if (!err) {
 					res.redirect('/');
 				}
