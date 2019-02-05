@@ -34,7 +34,7 @@
 
     <div class="form-group">
         <label class="form-label" for="deadline">Deadline</label>
-        <input type="date" name="deadline" value="{{doc.deadline}}">
+        <input type="date" name="deadline" value="{{doc.editedDeadline}}">
     </div>
 
     <div class="form-group">
@@ -45,12 +45,12 @@
     {{#if doc.district_event}}
     <span class="form-group">
         <input type="checkbox" name="districtEvent" checked>
-        <label class="form-label" for="district_event" style="display: inline-block;">District Event</label>
+        <label class="form-label" for="districtEvent" style="display: inline-block;">District Event</label>
     </span>
     {{else}}
     <span class="form-group">
         <input type="checkbox" name="districtEvent">
-        <label class="form-label" for="district_event" style="display: inline-block;">District Event</label>
+        <label class="form-label" for="districtEvent" style="display: inline-block;">District Event</label>
     </span>
     {{/if}}
 
