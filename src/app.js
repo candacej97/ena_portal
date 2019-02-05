@@ -17,7 +17,7 @@ app.use(session({
 
 // retrieving the model registered with mongoose
 const ANNOUNCEMENTS = mongoose.model('announcements');
-const USERS = mongoose.model('users');
+// const USERS = mongoose.model('users');
 // TODO: implement promo-admins and uncomment the following line
 // const PROMOS = mongoose.model('promos');
 
@@ -119,7 +119,7 @@ app.get('/user', (req, res) => {
 	// block any user that isn't logged in
 	if (req.session.user) {
 		// find all announcments that are associated with the user
-		ANNOUNCEMENTS.find({ submitedBy: req.session.user.username }, (err, docs) => {
+		ANNOUNCEMENTS.find({ submitedBy: req.session.user._id }, (err, docs) => {
 			if (!err) {
 				res.render('user-home', { announcements: docs });
 			}
@@ -150,35 +150,26 @@ app.post('/user/add', (req, res) => {
 
 	// create a timestamp
 	const createdAt = new Date().toLocaleString();
-	USERS.findOne({username: req.session.user.username}, (err, doc) => {
-		if (doc) {
+	if (start) {
+		const timeArr = start.split(':');
+		startTime = timeArr.join('');
+	}
 
-			if (start) {
-				const timeArr = start.split(':');
-				startTime = timeArr.join('');
-			}
-		
-			if (end) {
-				const timeArr = end.split(':');
-				endTime = timeArr.join('');
-			}
+	if (end) {
+		const timeArr = end.split(':');
+		endTime = timeArr.join('');
+	}
 
-			// add to db
-			new ANNOUNCEMENTS({ submitedBy: doc._id, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: (districtEvent === "on" ? true : false), promo_request: (promoRequest === "on" ? true : false), promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
-				if (!err) {
-					res.redirect('/');
-				}
-				else {
-					console.log(`Unable to save the document: ${err}`);
+	// add to db
+	new ANNOUNCEMENTS({ submitedBy: req.session.user._id, name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: (districtEvent === "on" ? true : false), promo_request: (promoRequest === "on" ? true : false), promo_material: promoMaterial, createdAt: createdAt }).save((err) => {
+		if (!err) {
+			res.redirect('/');
+		}
+		else {
+			console.log(`Unable to save the document: ${err}`);
 
-					// gracefully handle err with doc saving
-					res.render('announcement-add');
-				}
-			});
-
-		} else {
-			// if the user saved in the session is not found in the db...
-			res.redirect('/login');
+			// gracefully handle err with doc saving
+			res.render('announcement-add');
 		}
 	});
 
