@@ -145,20 +145,21 @@ app.get('/user/add', (req, res) => {
 
 app.post('/user/add', (req, res) => {
 	// retrieve all form input from rendered page
-	let { name, location, description, date, startTime, endTime, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
+	const { name, location, description, date, startTime: start, endTime: end, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
+	let startTime, endTime;
 
 	// create a timestamp
 	const createdAt = new Date().toLocaleString();
 	USERS.findOne({username: req.session.user.username}, (err, doc) => {
 		if (doc) {
 
-			if (startTime) {
-				const timeArr = startTime.split(':');
+			if (start) {
+				const timeArr = start.split(':');
 				startTime = timeArr.join('');
 			}
 		
-			if (endTime) {
-				const timeArr = endTime.split(':');
+			if (end) {
+				const timeArr = end.split(':');
 				endTime = timeArr.join('');
 			}
 
