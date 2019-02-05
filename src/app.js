@@ -181,20 +181,20 @@ app.get('/user/edit/:slug', (req, res) => {
 		ANNOUNCEMENTS.findOne({ slug: req.params.slug }, (err, doc) => {
 			if (!err) {
 				// change all the date/time formats
-				const {date, deadline, start_time, end_time} = doc;
+				const { date, deadline, start_time: startT, end_time: endT } = doc;
 
-				if (start_time && start_time.length > 0) {
-					const arr = start_time.split('');
+				if (startT && startT.length > 0) {
+					const arr = startT.split('');
 					arr.splice(2, 0, ':');
 					doc.start_time = arr.join('');
 				}
 
-				if (end_time && end_time.length > 0) {
-					const arr = end_time.split('');
+				if (endT && endT.length > 0) {
+					const arr = endT.split('');
 					arr.splice(2, 0, ':');
 					doc.end_time = arr.join('');
 				}
-				
+
 				if (date) {
 					const dateJS = new Date(date);
 					let newDate = "" + dateJS.getFullYear() + "-";
@@ -236,8 +236,32 @@ app.get('/user/edit/:slug', (req, res) => {
 });
 
 app.post('/user/edit/:slug', (req, res) => {
-	// NOTE change editedAt to new Date().toLocaleString()
+	// gather data from the body of the posted form
+	const { name, location, description, date, startTime: start, endTime: end, deadline, price, districtEvent, promoRequest, promoMaterial } = req.body;
+	let startTime, endTime;
 
+	if (start) {
+		const timeArr = start.split(':');
+		startTime = timeArr.join('');
+	}
+
+	if (end) {
+		const timeArr = end.split(':');
+		endTime = timeArr.join('');
+	}
+
+	// find the announcement & save data
+	ANNOUNCEMENTS.findOneAndUpdate({ slug: req.params.slug }, { name: name, location: location, desc: description, date: date, start_time: startTime, end_time: endTime, deadline: deadline, price: price, district_event: (districtEvent === "on" ? true : false), promo_request: (promoRequest === "on" ? true : false), promo_material: promoMaterial, editedAt: new Date().toLocaleString() }, (err) => {
+		if (!err) {
+			res.redirect('/');
+		}
+		else {
+			console.log(`Unable to save the document: ${err}`);
+
+			// gracefully handle err with doc saving
+			res.render('announcement-add');
+		}
+	});
 });
 
 app.listen(process.env.PORT || 3000);
