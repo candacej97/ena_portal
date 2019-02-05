@@ -18,8 +18,8 @@ const announcementSchema = new mongoose.Schema({
     name: {type: String, required: true},
     location: {type: String, required: true},
     date: {type: Date, required: true},
-    start_time: {type: String, validate: RegExp(/\d{4}/)}, /* time as a 24-hr formatted string */
-    end_time: {type: String, validate: RegExp(/\d{4}/)},
+    start_time: {type: String, required: false}, /* time as a 24-hr formatted string */
+    end_time: {type: String, required: false},
     deadline: Date,
     price: Number,
     desc: {type: String, required: true},
