@@ -1,74 +1,49 @@
 const mongoose = require('mongoose');
 const URLSlugs = require('mongoose-url-slugs');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
-
-/**
- * USER SCHEMA
- * 
- * usernames are strings
- * passwords are hashes
- */
+// USER SCHEMA
 const userSchema = new mongoose.Schema({
-    username: { type: String, unique: true, required: true },
+    // username validation is to be any alphanumeric char 8 char or more in length
+    username: { type: String, unique: true, required: true, validate: RegExp(/\w{8,}/) },
     // password hash provided by authentication plugin
     password: { type: String, required: true }
 });
 
-mongoose.model('User', userSchema);
+mongoose.model('users', userSchema);
 
-/**
- * ANNOUNCEMENT SCHEMA
- * 
- * submitedBy are refs to User objects
- * names are strings
- * locations are strings of addresses
- * dates and deadlines are js date types (strings)
- * start_ and end_times are all date.gettime() (strings)
- * price is a number
- * desc are strings
- * district_events/promo_requests are boolean values
- * promo_material are strings
- * there is a timestamp of the time they are created and edited at
- */
+// ANNOUNCEMENT SCHEMA
 const announcementSchema = new mongoose.Schema({
-    submitedBy: { type: String, required: true },
-    name: String,
-    location: String,
-    date: String,
-    start_time: String,
-    end_time: String /* not required */,
-    deadline: String /* not required */,
-    price: Number /* not required */,
-    desc: String,
-    district_event: Boolean,
-    promo_request: Boolean,
+    submitedBy: { type: ObjectId, ref: 'user', required: true },
+    name: {type: String, required: true},
+    location: {type: String, required: true},
+    date: {type: Date, required: true},
+    start_time: {type: String, required: false}, /* time as a 24-hr formatted string */
+    end_time: {type: String, required: false},
+    deadline: Date,
+    price: Number,
+    desc: {type: String, required: true},
+    district_event: {type: Boolean, default: false},
+    promo_request: {type: Boolean, default: false},
     promo_material: String,
-    createdAt: String /* timestamp */,
-    editedAt: String /* timestamp */,
+    // promoFiles: File,
+    createdAt: {type: Date, default: Date.now()} /* timestamp */,
+    editedAt: Date /* timestamp */
 });
 
 // use plugins (for slug)
 announcementSchema.plugin(URLSlugs('name', {field: 'slug', separator: '-', update: true }));
+mongoose.model('announcements', announcementSchema);
 
-mongoose.model('Announcement', announcementSchema);
-
-// TODO: edit the other schema
-
-/**
- * PROMOTIONAL QUEUE SCHEMA
- * 
- * consists of 3 props
- *  announcements are arrays of announcement object references
- *  createdAt is a timestamp of when the queue was creates
- *  editedAt is a timestamp of when the queue was edited
- */
+// PROMOTIONAL QUEUE SCHEMA
+// fixme can validate handle checking another schema for a flag?
 const promoSchema = new mongoose.Schema({
-    announcements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'List' }],
-    createdAt: String /* timestamp */,
-    editedAt: String /* timestamp */
+    announcements: [{ type: ObjectId, ref: 'List' }],
+    createdAt: Date, /* timestamp */
+    editedAt: Date /* timestamp */
 });
 
-mongoose.model('PromoQueue', promoSchema);
+mongoose.model('promos', promoSchema);
 
 // is the environment variable, NODE_ENV, set to PRODUCTION? 
 let dbconf;
@@ -86,7 +61,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
  dbconf = conf.dbconf;
 } else {
  // if we're not in PRODUCTION mode, then use
- dbconf = 'mongodb://localhost/final-project';
+ dbconf = 'mongodb://localhost/ena_portal';
 }
 
 mongoose.connect(dbconf, { useNewUrlParser: true, useCreateIndex: true });

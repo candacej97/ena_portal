@@ -1,29 +1,82 @@
 <h3>Edit {{doc.name}} Submission</h3>
 
 <form action="" method="post">
-    <input type="text" name="name" placeholder="Name of Event" value="{{doc.name}}">
-    <input type="text" name="location" placeholder="Location" value="{{doc.location}}">
-    <input type="date" name="date" value="{{doc.date}}">
 
-    <label for="start_time">Start Time</label>
-    <input type="time" name="startTime" value="{{doc.start_time}}">
-        
-    <label for="end_time">End Time</label>
-    <input type="time" name="endTime" value="{{doc.end_time}}">
+    <div class="form-group">
+        <label class="form-label" for="name">Name of Event</label>
+        <input type="text" name="name" placeholder="Name of Event" value="{{doc.name}}" required>
+    </div>
 
-    <label for="deadline">Deadline</label>
-    <input type="date" name="deadline" value="{{doc.deadline}}">
+    <div class="form-group">
+        <label class="form-label" for="location">Location</label>
+        <textarea type="text" name="location" placeholder="Location" required>{{doc.location}}</textarea>
+    </div>
 
-    <label for="price">Price</label>
-    <input type="number" name="price" value="{{doc.price}}">
+    <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea type="text" name="description" placeholder="Describe this event" required>{{doc.desc}}</textarea>
+    </div>
 
-    <label for="district_event">District Event</label>
-    <input type="checkbox" name="districtEvent" value="{{doc.district_event}}">
+    <div class="form-group">
+        <label class="form-label" for="date">Date of Event</label>
+        <input type="date" name="date" value="{{doc.editedDate}}" required>
+    </div>
 
-    <label for="promo_request">Promo Request</label>
-    <input type="checkbox" name="promoRequest" value="{{doc.promo_request}}">
+    <div class="form-group">
+        <label class="form-label" for="startTime">Start Time</label>
+        <input type="time" name="startTime" value="{{doc.start_time}}">
+    </div>
 
-    <textarea name="promoMaterial" placeholder="Place all promotion material here." value="{{doc.promo_material}}"></textarea>
+    <div class="form-group">
+        <label class="form-label" for="endTime">End Time</label>
+        <input type="time" name="endTime" value="{{doc.end_time}}">
+    </div>
 
-    <input type="submit" value="submit">
+    <div class="form-group">
+        <label class="form-label" for="deadline">Deadline</label>
+        <input type="date" name="deadline" value="{{doc.editedDeadline}}">
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="price">Price</label>
+        <input type="number" name="price" value="{{doc.price}}">
+    </div>
+
+    {{#if doc.district_event}}
+    <span class="form-group">
+        <input type="checkbox" name="districtEvent" checked>
+        <label class="form-label" for="districtEvent" style="display: inline-block;">District Event</label>
+    </span>
+    {{else}}
+    <span class="form-group">
+        <input type="checkbox" name="districtEvent">
+        <label class="form-label" for="districtEvent" style="display: inline-block;">District Event</label>
+    </span>
+    {{/if}}
+
+    {{#if doc.promo_request}}
+    <span class="form-group">
+        <input type="checkbox" name="promoRequest" checked>
+        <label class="form-label" for="promoRequest" style="display: inline-block;">Promo Request</label>
+    </span>
+    {{else}}
+    <span class="form-group">
+        <input type="checkbox" name="promoRequest">
+        <label class="form-label" for="promoRequest" style="display: inline-block;">Promo Request</label>
+    </span>
+    {{/if}}
+
+    <div class="form-group">
+        <label class="form-label" for="promoMaterial">Promo Request</label>
+        <textarea name="promoMaterial" placeholder="Place all promotional material here.">{{doc.promo_material}}</textarea>
+    </div>
+
+    {{!-- note: promoFiles is new --}}
+    {{!-- <div class="form-group">
+        <label class="form-label" for="promoFiles">Upload Promo Files</label>
+        <input type="file" name="promoFiles" multiple="true">
+    </div> --}}
+
+    <input class="btn btn-primary input-group-btn" type="submit" value="Submit Edit">
+    {{!-- <input class="btn btn-secondary input-group-btn" type="submit" value="Delete Submission"> --}}
 </form>

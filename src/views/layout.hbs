@@ -14,14 +14,15 @@
             {{#if user}}
             <span>
                 <h1>Events and Announcements Portal</h1>
+                <a href="/">Home</a>
+                <a href="/signout">Sign Out</a>
                 <span>Hi, {{user.username}}</span>
-                <a href="./">Home</a>
             </span>
             {{else}}
             <span>
                 <h1>Events and Announcements Portal</h1>
-                <a href="./register">Register</a>
-                <a href="./login">Sign In</a>
+                <a href="/register">Register</a>
+                <a href="/login">Sign In</a>
             </span>
             {{/if}}
         </header>
