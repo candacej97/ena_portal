@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 	}
 	else {
 		// get all announcements and render them on this page
-		ANNOUNCEMENTS.find({}, (err, docs) => {
+		ANNOUNCEMENTS.find({ date: { "$gte": Date.now() } }, null, { sort: { date: 1 } }, (err, docs) => {
 			if (!err) {
 				for (const doc in docs) {					
 					if (docs[doc].date) {
@@ -124,7 +124,7 @@ app.get('/user', (req, res) => {
 	// block any user that isn't logged in
 	if (req.session.user) {
 		// find all announcments that are associated with the user
-		ANNOUNCEMENTS.find({ submitedBy: req.session.user._id }, (err, docs) => {
+		ANNOUNCEMENTS.find({ submitedBy: req.session.user._id }, null, { sort: { date: 1 } }, (err, docs) => {
 			if (!err) {
 				for (const doc in docs) {					
 					if (docs[doc].date) {
