@@ -50,58 +50,6 @@ go to your browser and go to `localhost:3000`
     * bcryptjs
 * MongoDB
 
-## Data Model
-
-The application will store Users, Announcments, and a Promotional Queue
-
-* Users can have multiple announcements associated to them (via references)
-* The Promotional Queue will contain multiple announcements (via references)
-
-An Example User:
-
-```js
-{
-  username: "candacej97",
-  password: /* a password hash */,
-  announcements: /* an array of references to Announcement documents */,
-  userID: /* for referencing later */
-}
-```
-
-An Example Announcement:
-
-```js
-{
-  submitedBy: /* a reference to a User object */ ,
-  name: "Heritage 2018",
-  location: "United Apostolic Church" /* name or address */,
-  date: "11/6/2018" /* d.toLocaleDateString() */,
-  start_time: "12:00:00 PM" /* d.toLocaleTimeString() */,
-  end_time: "3:00:00 PM" /* d.toLocaleTimeString() */,
-  deadline: "" /* not required */ ,
-  price: 20 /* not required, in USD */,
-  desc: "This event celebrates the stalwarts and long-time followers of the Apostolic doctrine.",
-  district_event: false,
-  promo_request: true,
-  promo_material: "",
-  createdAt: "Mon Nov 01 2018 12:14:21 GMT-0500 (Eastern Standard Time)" /* timestamp, d.toString() */,
-  editedAt: "Mon Nov 01 2018 14:49:01 GMT-0500 (Eastern Standard Time)" /* timestamp, d.toString() */,
-  announcementID: /* for referencing later */
-}
-```
-
-An Example Promotional Queue with Embedded Announcement:
-
-```js
-{
-  announcements: [
-    /* references to Announcement documents */
-  ],
-  createdAt: String /* timestamp */,
-  editedAt: String /* timestamp */
-}
-```
-
 ## Wireframes
 
 ![Public Homepage of the ENA Portal as of 11/07/18](docs/img/home.png?raw=true "Public Homepage of the ENA Portal as of 11/07/18")
@@ -130,12 +78,6 @@ An Example Promotional Queue with Embedded Announcement:
 6. as a user, I can edit my submitted announcement forms
 7. as an admin user, I can approve, deny or postpone/delay submitted announcement forms for live view
 
-## Research Topics
-
-<!-- TODO the following -->
-* (5 points) Integrate user authentication
-    * I'm going to be using [Passport-Local Mongoose](https://github.com/saintedlama/passport-local-mongoose) for user authentication
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
@@ -144,16 +86,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 * [ExpressJS-Session](https://github.com/expressjs/session) - [my code (line 7-12)](src/app.js#L7)
 
-<!-- 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this) -->
-
-<!-- ## To Do List
-
-* [x] implement user register form
-* [] implement user login form (with user auth) - PASSPORT-LOCAL MONGOOSE
-* [x] link announcement form submission to logged in user and...
-* [] implement edit announcement form
-* [x] implement css framework - SPECTRE CSS
-* [] prototype a functioning calendar which would lead to day/event details page
-  * could also just be a calendar that has a list-view
-
--->
+<!-- * [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this) -->
