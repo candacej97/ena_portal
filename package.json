@@ -1,7 +1,7 @@
 {
   "name": "ena_portal",
-  "version": "0.1.0",
-  "description": "Running and organization is one thing, getting an organization to be organized is a job in itself. The ENA Portal is a web app boilerplate for keeping track of all events and announcements for an organization and displaying them to public users, and allowing admin users to accept requests to host and/or promote events.",
+  "version": "1.0.0",
+  "description": "Web app boilerplate for keeping track of all events and announcements for an organization and displaying them to public users, and allowing admin users to accept requests to host and/or promote events.",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
