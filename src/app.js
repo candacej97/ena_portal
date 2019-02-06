@@ -50,6 +50,11 @@ app.get('/', (req, res) => {
 		// get all announcements and render them on this page
 		ANNOUNCEMENTS.find({}, (err, docs) => {
 			if (!err) {
+				for (const doc in docs) {					
+					if (docs[doc].date) {
+						docs[doc].formattedDate = docs[doc].date.toDateString();
+					}
+				}
 				res.render('index', { announcements: docs });
 			}
 			else {
@@ -121,6 +126,11 @@ app.get('/user', (req, res) => {
 		// find all announcments that are associated with the user
 		ANNOUNCEMENTS.find({ submitedBy: req.session.user._id }, (err, docs) => {
 			if (!err) {
+				for (const doc in docs) {					
+					if (docs[doc].date) {
+						docs[doc].formattedDate = docs[doc].date.toDateString();
+					}
+				}
 				res.render('user-home', { announcements: docs });
 			}
 			else {
